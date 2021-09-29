@@ -162,7 +162,6 @@ public class ResponderChain: ObservableObject {
         assert(Thread.isMainThread && shouldUpdateUI)
         if let tag = firstResponder, tag != oldValue {
             if let responder = taggedResponders[tag] {
-                print("Making first responder:", tag, responder)
                 #if os(macOS)
                     let succeeded = window.makeFirstResponder(responder)
                 #elseif os(iOS) || os(tvOS)
@@ -177,7 +176,6 @@ public class ResponderChain: ObservableObject {
                 firstResponder = nil
             }
         } else if firstResponder == nil, let previousResponder = oldValue.flatMap({ taggedResponders[$0] }) {
-            print("Resigning first responder", oldValue ?? "")
             #if os(macOS)
                 window.endEditing(for: previousResponder)
             #elseif os(iOS) || os(tvOS)
